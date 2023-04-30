@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single" >
+        <item android:id="@+id/nav_edit" android:title="@string/editprofile" android:icon="@drawable/nav_personinfo"
+            android:checkable="true"
+            />
+        <item android:id="@+id/nav_articles" android:title="@string/myarticle" android:icon="@drawable/nav_articles"
+            android:checkable="true"
+            />
+        <item android:id="@+id/nav_favorite" android:title="@string/favourite" android:icon="@drawable/nav_favorite"
+            android:checkable="true"
+            />
+        <item android:id="@+id/nav_clear_cache" android:title="@string/cleancache" android:icon="@drawable/nav_clear_cache"
+            android:checkable="true"
+            />
+        <item android:id="@+id/nav_switch" android:title="@string/logout" android:icon="@drawable/nav_switch" android:checkable="true"/>
+
+    </group>
+</menu>
