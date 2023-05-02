@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     app:cardCornerRadius="8dp">
-    <!--作为子项的布局，使得每张图片都是在卡片当中-->
+
 
     <RelativeLayout
         android:orientation="vertical"
@@ -21,7 +21,7 @@
             android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop" />
-        <!--指定图片的缩放模式，让图片保持原有比例填充满ImageView，并将超出屏幕的部分裁剪掉-->
+
 
         <TextView
             android:id="@+id/article_name"

@@ -4,19 +4,19 @@ import org.litepal.crud.LitePalSupport;
 
 public class UserInfo extends LitePalSupport {
 
-    // 账号
+
     private String userAccount;
-    // 昵称
+
     private String nickName;
-    // 登录密码
+
     private String userPwd;
-    // 性别
+
     private String userSex;
-    // 生日
+
     private String userBirthDay;
-    // 个性签名
+
     private String userSignature;
-    // 保存头像的路径
+
     private String imagePath;
 
     public String getUserAccount() {

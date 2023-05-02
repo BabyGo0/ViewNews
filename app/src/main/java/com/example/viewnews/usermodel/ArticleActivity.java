@@ -35,26 +35,19 @@ public class ArticleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         userIdNumber = getIntent().getStringExtra("user_article_id");
-        System.out.println("当前用户的账号为" + userIdNumber);
         Toolbar toolbar = findViewById(R.id.article_toolbar);
-        toolbar.setTitle("我的文章");
+        toolbar.setTitle("My Articles");
         setSupportActionBar(toolbar);
-        //获取到ActionBar的实例
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            //将导航按钮显示出来
             actionBar.setDisplayHomeAsUpEnabled(true);
-            //设置一个导航按钮图标
             actionBar.setHomeAsUpIndicator(R.drawable.ic_return_left);
         }
 
-        //监听点击事件
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.article_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(ArticleActivity.this, "点击编辑文章", Toast.LENGTH_SHORT).show();
-                //跳转到编辑文章页面，返回来之后重新刷新列表
                 Intent editArticleIntent = new Intent(ArticleActivity.this, EditArticleActivity.class);
                 editArticleIntent.putExtra("userId", userIdNumber);
                 startActivityForResult(editArticleIntent, 7);
@@ -69,8 +62,6 @@ public class ArticleActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("回到我的文章列表这里！需要重新刷新一下列表！");
-        //initArticles();
     }
 
     private void initArticles() {
@@ -84,7 +75,6 @@ public class ArticleActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // 销毁当前活动
                 ArticleActivity.this.finish();
                 break;
         }
@@ -97,8 +87,6 @@ public class ArticleActivity extends BaseActivity {
         switch (requestCode) {
             case 7:
                 if(resultCode == RESULT_OK) {
-                    //Toast.makeText(ArticleActivity.this, "该刷新列表了", Toast.LENGTH_SHORT).show();
-                    // 刷新个人文章列表
                     initArticles();
                 }
                 break;

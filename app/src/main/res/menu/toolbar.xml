@@ -3,10 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <!--collapseActionView：声明了这个操作视窗应该被折叠到一个按钮中，
-        当用户选择这个按钮时，这个操作视窗展开。
-    orderInCategory：设置优先级，值越大优先级越低
-    -->
     <item android:id="@+id/userFeedback" android:title="@string/feedback"
         app:showAsAction="collapseActionView"
         android:orderInCategory="110"/>

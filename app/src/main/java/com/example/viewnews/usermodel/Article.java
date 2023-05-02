@@ -4,17 +4,16 @@ import org.litepal.crud.LitePalSupport;
 
 public class Article extends LitePalSupport {
 
-    // 用户账号（唯一标识）
     private String userId;
-    // 标题
+
     private String articleTitle;
-    // 作者昵称
+
     private String articleAuthor;
-    // 编写时间
+
     private String articleTime;
-    // 文章图片地址
+
     private String articleImagePath;
-    // 文章内容
+
     private String articleContent;
 
     public String getUserId() {

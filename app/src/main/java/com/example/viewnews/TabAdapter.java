@@ -13,14 +13,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
-//自定义新闻列表的适配器
+
 public class TabAdapter extends BaseAdapter {
 
     private List<NewsBean.ResultBean.DataBean> list;
 
     private Context context;
 
-    //设置正常加载图片的个数
+
     private int IMAGE_01 = 0;
 
     private int IMAGE_02 = 1;
@@ -49,13 +49,13 @@ public class TabAdapter extends BaseAdapter {
         return position;
     }
 
-    //得到不同item的总数
+
     @Override
     public int getViewTypeCount() {
         return VIEW_COUNT;
     }
 
-    //得到当前新闻子项item的类型
+
     @Override
     public int getItemViewType(int position) {
         if (list.get(position).getThumbnail_pic_s() != null &&
@@ -69,7 +69,6 @@ public class TabAdapter extends BaseAdapter {
         return IMAGE_01;
     }
 
-    //提升ListView的运行效率，参数convertView用于将之前加载好的布局进行缓存，以便以后可以重用：https://blog.csdn.net/xiao_ziqiang/article/details/50812471
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (getItemViewType(position) == IMAGE_01) {
@@ -77,7 +76,6 @@ public class TabAdapter extends BaseAdapter {
             if (convertView == null) {
                 convertView = View.inflate(context, R.layout.item_layout01, null);
                 holder = new Image01_ViewHolder();
-                //查找控件
                 holder.author_name = (TextView) convertView.findViewById(R.id.author_name);
                 holder.title = (TextView) convertView.findViewById(R.id.title);
                 holder.image = (ImageView) convertView.findViewById(R.id.image);
@@ -87,13 +85,11 @@ public class TabAdapter extends BaseAdapter {
                 holder = (Image01_ViewHolder) convertView.getTag();
             }
 
-            //获取数据重新赋值
+
             holder.title.setText(list.get(position).getTitle());
             holder.author_name.setText(list.get(position).getAuthor_name());
 
-            /**
-             * DiskCacheStrategy.NONE： 表示不缓存任何内容。
-             */
+
             Glide.with(context)
                     .load(list.get(position).getThumbnail_pic_s())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -107,17 +103,15 @@ public class TabAdapter extends BaseAdapter {
             if (convertView == null) {
                 convertView = View.inflate(context, R.layout.item_layout02, null);
                 holder = new Image02_ViewHolder();
-                //查找控件
                 holder.image001 = (ImageView) convertView.findViewById(R.id.image001);
                 holder.image002 = (ImageView) convertView.findViewById(R.id.image002);
                 holder.title = (TextView) convertView.findViewById(R.id.title);
-                //将ViewHolder对象存储在View中
                 convertView.setTag(holder);
 
             } else {
                 holder = (Image02_ViewHolder) convertView.getTag();
             }
-            //获取数据重新赋值
+
             holder.title.setText(list.get(position).getTitle());
             Glide.with(context)
                     .load(list.get(position).getThumbnail_pic_s())
@@ -138,7 +132,6 @@ public class TabAdapter extends BaseAdapter {
             if (convertView == null) {
                 convertView = View.inflate(context, R.layout.item_layout03, null);
                 holder = new Image03_ViewHolder();
-                //查找控件
                 holder.image01 = (ImageView) convertView.findViewById(R.id.image01);
                 holder.image02 = (ImageView) convertView.findViewById(R.id.image02);
                 holder.image03 = (ImageView) convertView.findViewById(R.id.image03);
@@ -147,7 +140,7 @@ public class TabAdapter extends BaseAdapter {
             } else {
                 holder = (Image03_ViewHolder) convertView.getTag();
             }
-            //获取数据重新赋值
+
             holder.title.setText(list.get(position).getTitle());
 
             Glide.with(context)
@@ -175,7 +168,7 @@ public class TabAdapter extends BaseAdapter {
         return convertView;
     }
 
-    //新增3个内部类
+
     class Image01_ViewHolder {
         TextView title, author_name;
         ImageView image;

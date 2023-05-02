@@ -57,15 +57,13 @@ public class EditArticleActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_article);
         userID = getIntent().getStringExtra("userId");
         Toolbar toolbar = (Toolbar) findViewById(R.id.article_edit_toolbar);
-        toolbar.setTitle("编辑文章");
+        toolbar.setTitle("Edit Article");
         List<UserInfo> userInfos = LitePal.where("userAccount = ?", userID).find(UserInfo.class);
         article.setUserId(userID);
         article.setArticleAuthor(userInfos.get(0).getNickName());
-        System.out.println("当前文章详情为：" + article);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            //启用HomeAsUp按钮
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_return_left);
         }
@@ -86,12 +84,11 @@ public class EditArticleActivity extends BaseActivity {
             }
         });
 
-        // 发布时间
         publishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(TextUtils.isEmpty(editTitle.getText()) || TextUtils.isEmpty(editContent.getText())) {
-                    Toast.makeText(EditArticleActivity.this, "输入不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditArticleActivity.this, "You have to fill the text filed", Toast.LENGTH_SHORT).show();
                 } else {
                     article.setArticleTitle(editTitle.getText().toString());
                     article.setArticleContent(editContent.getText().toString());
@@ -101,8 +98,8 @@ public class EditArticleActivity extends BaseActivity {
                     System.out.println(sdf.format(calendar.getTime()));
                     article.setArticleTime(sdf.format(calendar.getTime()));
                     boolean save = article.save();
-                    if(save) Toast.makeText(EditArticleActivity.this, "发布成功！", Toast.LENGTH_SHORT).show();
-                    else Toast.makeText(EditArticleActivity.this, "发布失败！", Toast.LENGTH_SHORT).show();
+                    if(save) Toast.makeText(EditArticleActivity.this, "Lunch Successfully!", Toast.LENGTH_SHORT).show();
+                    else Toast.makeText(EditArticleActivity.this, "Lunch Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -158,15 +155,12 @@ public class EditArticleActivity extends BaseActivity {
                 imagePath = getImagePath(contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            //如或是content类型的URI就使用普通方法处理
             imagePath = getImagePath(uri, null);
 
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            //如果是file类型的直接获取图片路径就行
             imagePath = uri.getPath();
         }
         editImagePath = imagePath;
-        // 根据图片路径显示图片
         diplayImage(imagePath);
     }
 
@@ -178,7 +172,6 @@ public class EditArticleActivity extends BaseActivity {
 
     private String getImagePath(Uri uri, String selection) {
         String path = null;
-        //通过Uri和selection来获取真实的图片路径
         Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -203,7 +196,6 @@ public class EditArticleActivity extends BaseActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent();
-                // 提醒刷新列表
                 setResult(RESULT_OK, intent);
                 EditArticleActivity.this.finish();
                 return true;

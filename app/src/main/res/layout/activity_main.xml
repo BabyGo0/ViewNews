@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--自定义标题栏-->
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_height="?attr/actionBarSize"
@@ -24,7 +24,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />
 
-        <!--横向标签显示布局-->
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <!---->
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"

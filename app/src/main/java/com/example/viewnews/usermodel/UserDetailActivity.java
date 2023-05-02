@@ -66,7 +66,7 @@ public class UserDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         detailToolbar = findViewById(R.id.userData_toolbar);
-        detailToolbar.setTitle("个人信息");
+        detailToolbar.setTitle("Personal Data");
         setSupportActionBar(detailToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -94,7 +94,7 @@ public class UserDetailActivity extends BaseActivity {
         calendar = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         Date date = null;
-        if (!TextUtils.isEmpty(userInfo.getUserBirthDay()) && !userInfo.getUserBirthDay().equals("待完善")) {
+        if (!TextUtils.isEmpty(userInfo.getUserBirthDay()) && !userInfo.getUserBirthDay().equals("Wait to fill")) {
             try {
                 date = format.parse(userInfo.getUserBirthDay());
                 calendar.setTime(date);
@@ -108,7 +108,6 @@ public class UserDetailActivity extends BaseActivity {
     private void initData() {
         List<UserInfo> infos = LitePal.where("userAccount = ?", userId).find(UserInfo.class);
         userInfo = infos.get(0);
-        System.out.println("用户详情界面的信息为" + userInfo);
         showNickName.setText(userInfo.getNickName());
         showSex.setText(userInfo.getUserSex());
         showBirthday.setText(userInfo.getUserBirthDay());
@@ -117,7 +116,6 @@ public class UserDetailActivity extends BaseActivity {
         diplayImage(curImagePath);
     }
 
-    // 在活动由不可见变为可见的时候调用
     @Override
     protected void onStart() {
         super.onStart();
@@ -135,22 +133,19 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 new MaterialDialog.Builder(UserDetailActivity.this)
-                        .title("修改昵称")
+                        .title("Edit Nickname")
                         .inputRangeRes(2, 8, R.color.colorBlack)
                         .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input("请输入要修改的昵称", userInfo.getNickName(), new MaterialDialog.InputCallback() {
+                        .input("Please input Nickname", userInfo.getNickName(), new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
-                                // CharSequence的值是可读可写序列，而String的值是只读序列。
-                                //Toast.makeText(UserDetailActivity.this, input, Toast.LENGTH_SHORT).show();
 
                                 System.out.println(input.toString());
-                                // 重新设置值，当前活动被销毁时才保存到数据库
                                 userInfo.setNickName(input.toString());
                                 showNickName.setText(userInfo.getNickName());
                             }
                         })
-                        .positiveText("确定")
+                        .positiveText("Confirm")
                         .show();
 
             }
@@ -158,15 +153,13 @@ public class UserDetailActivity extends BaseActivity {
         layout_sex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] contentSex = new String[]{"男", "女"};
+                String[] contentSex = new String[]{"Male", "Female"};
                 new MaterialDialog.Builder(UserDetailActivity.this)
-                        .title("修改性别")
+                        .title("Edit Gender")
                         .items(contentSex)
-                        .itemsCallbackSingleChoice(userInfo.getUserSex().equals("女") ? 1 : 0, new MaterialDialog.ListCallbackSingleChoice() {
+                        .itemsCallbackSingleChoice(userInfo.getUserSex().equals("Female") ? 1 : 0, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                System.out.println("选择哪一个" + which);
-                                System.out.println("选择的内容是" + text);
                                 userInfo.setUserSex(text.toString());
                                 showSex.setText(userInfo.getUserSex());
                                 return true;
@@ -203,7 +196,7 @@ public class UserDetailActivity extends BaseActivity {
                         .title("Edit signature")
                         .inputRangeRes(1, 38, R.color.colorBlack)
                         .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input("请输入要修改的个性签名", userInfo.getUserSignature(), new MaterialDialog.InputCallback() {
+                        .input("Please input signature", userInfo.getUserSignature(), new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
 
@@ -222,14 +215,12 @@ public class UserDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // 保存更改的数据
                 userInfo.save();
                 Intent intent = new Intent();
                 intent.putExtra("nickName", showNickName.getText().toString());
                 intent.putExtra("signature", showSignature.getText().toString());
                 intent.putExtra("imagePath", userInfo.getImagePath());
                 setResult(RESULT_OK, intent);
-                System.out.println("当前个人信息活动页被销毁！！！");
                 UserDetailActivity.this.finish();
                 break;
         }
@@ -287,16 +278,12 @@ public class UserDetailActivity extends BaseActivity {
                 imagePath = getImagePath(contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            //如或是content类型的URI就使用普通方法处理
             imagePath = getImagePath(uri, null);
 
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            //如果是file类型的直接获取图片路径就行
             imagePath = uri.getPath();
         }
-        // 根据图片路径显示图片
         userInfo.setImagePath(imagePath);
-        System.out.println("更新图片后，用户信息为" + userInfo);
         diplayImage(imagePath);
     }
 
@@ -308,7 +295,6 @@ public class UserDetailActivity extends BaseActivity {
 
     private String getImagePath(Uri uri, String selection) {
         String path = null;
-        //通过Uri和selection来获取真实的图片路径
         Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -331,6 +317,5 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("个人信息页面被销毁。。。。。。。。。。");
     }
 }

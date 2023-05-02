@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-// BaseActivity不需要注册
+
 public class BaseActivity extends AppCompatActivity {
 
     @Override

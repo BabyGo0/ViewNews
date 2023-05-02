@@ -30,7 +30,6 @@ public class LoginActivity extends BaseActivity {
     private EditText userAccount;
     private EditText userPwd;
     private Button loginBtn;
-    private FirebaseAuth mAuth;
 
     private Button registerBtn;
 
@@ -40,9 +39,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         userAccount = findViewById(R.id.login_userAccount);
         userPwd = findViewById(R.id.login_pwd);
-        mAuth = FirebaseAuth.getInstance();
 
-        // 在点击编辑资料时，提醒先登录
         Intent intent = getIntent();
         String status = intent.getStringExtra("loginStatus");
         if(status != null) {
@@ -57,23 +54,21 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View view) {
                 String numId = userAccount.getText().toString();
                 String pwd = userPwd.getText().toString();
-                // 先判断输入不能为空
                 if(TextUtils.isEmpty(numId) || TextUtils.isEmpty(pwd)) {
-                    Toast.makeText(LoginActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "You have to fill the text field", Toast.LENGTH_SHORT).show();
                 } else {
-                    //此处用litepal去查询数据库，查询用户输入的账号和密码是否登录成功，其中账号是唯一标识
+
                     List<UserInfo> userInfos = LitePal.where("userAccount = ?", numId).find(UserInfo.class);
                     System.out.println(userInfos);
-                    Log.d("登录界面", "onClick: " + userInfos);
                     if(userInfos.size() == 0) {
-                        // 提示用户注册
-                        Toast.makeText(LoginActivity.this, "账号不存在，请先注册！", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(LoginActivity.this, "Account dose not exit! Please register first.", Toast.LENGTH_SHORT).show();
                     } else {
-                        // 验证密码是否正确
+
                         if(!pwd.equals(userInfos.get(0).getUserPwd())) {
-                            Toast.makeText(LoginActivity.this, "请确认是否输入正确的密码?", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Please input the correct password", Toast.LENGTH_SHORT).show();
                         } else {
-                            // 登录成功，返回到主界面，主界面要保存登录的账号，便于查询读者信息，主界面使用onActivityResult来接收得到的账号
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("userID", numId);
                             intent.putExtra("userNick", userInfos.get(0).getNickName());
@@ -90,9 +85,9 @@ public class LoginActivity extends BaseActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //此处跳转到注册页面
+
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                // 注册请求码是2
+
                 startActivityForResult(intent, 2);
             }
         });
@@ -113,13 +108,13 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // 登录界面销毁时存储账号
+
         String inputIdText = userAccount.getText().toString();
         save(inputIdText);
-        System.out.println("活动毁灭之前是否传值" + inputIdText);
+
     }
 
-    // 存储账号，方便下次启动app时，直接读取账号，并初始化数据
+
     public void save(String inputText) {
         FileOutputStream out = null;
         BufferedWriter writer = null;

@@ -31,10 +31,9 @@ public class UserFavoriteActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_favorite);
         userIdNumber = getIntent().getStringExtra("user_love_id");
-        System.out.println("收藏：当前用户的id为" + userIdNumber);
         favoriteNewsList = findViewById(R.id.favorite_newsList);
         favoriteToolbar = findViewById(R.id.userFavorite_toolbar);
-        favoriteToolbar.setTitle("我的收藏");
+        favoriteToolbar.setTitle("My Favorite");
         setSupportActionBar(favoriteToolbar);
         initNews();
         ActionBar actionBar = getSupportActionBar();
@@ -44,10 +43,8 @@ public class UserFavoriteActivity extends BaseActivity {
         }
     }
 
-    // 初始化数据
     private void initNews() {
         sonNewList = LitePal.where("userIdNumer = ? ", userIdNumber).find(NewsCollectBean.class);
-        System.out.println("当前喜欢的列表有：" + sonNewList);
         adapter = new FavoriteNewsListAdapter(UserFavoriteActivity.this, R.layout.item_favorite_news,sonNewList);
         favoriteNewsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -79,16 +76,15 @@ public class UserFavoriteActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 4:
-                if(resultCode == RESULT_OK) {
-                    initNews();
-                    System.out.println("奥里给！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
-                }
-                break;
-        }
-    }
+       @Override
+     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+         super.onActivityResult(requestCode, resultCode, data);
+         switch (requestCode) {
+             case 4:
+                 if(resultCode == RESULT_OK) {
+                     initNews();
+                 }
+                 break;
+           }
+       }
 }

@@ -52,7 +52,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_article, parent, false);
 
         final ViewHolder holder = new ViewHolder(view);
-        //给cardView注册了一个监听器,当点击时,构造一个Intent并带到ArticleActivity活动中
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +72,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         Article article = mArticleList.get(position);
         holder.articleTitle.setText(article.getArticleTitle());
         holder.articleTime.setText(article.getArticleTime());
-        //使用Glide来加载图片，with方法传入一个Context、Activity或Fragment参数，最后调用load()方法去加载图片在
         Glide.with(mContext)
                 .load(article.getArticleImagePath())
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
