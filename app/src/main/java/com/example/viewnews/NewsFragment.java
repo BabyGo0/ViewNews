@@ -220,7 +220,7 @@ public class NewsFragment extends Fragment {
 
             @Override
             protected String doInBackground(Void... params) {
-                String path = "http://v.juhe.cn/toutiao/index?type=" + data + "&key=971d27d0a82f7b236ab45bcd21955f9e";
+                String path = "http://v.juhe.cn/toutiao/index?type=" + data + "&key=65222819ce909ea2e5dba98d90654cc4";
                 URL url = null;
                 try {
                     url = new URL(path);
